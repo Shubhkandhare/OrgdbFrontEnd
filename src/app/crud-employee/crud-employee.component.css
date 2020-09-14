@@ -1,0 +1,25 @@
+.table {
+    display: table;
+}
+
+.row {
+    display: table-row;
+}
+
+.column {
+    display: table-cell;
+    vertical-align: top;
+}
+.separator{
+    height: 10px;
+}
+.example-form {
+    min-width: 150px;
+    max-width: 200px;
+    width: 100%;
+  }
+  
+  .example-full-width {
+    width: 80%;
+  }
+  
