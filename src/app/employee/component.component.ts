@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 export class ComponentComponent implements OnInit {
   ELEMENT_DATA : IEmployee[];
   displayedColumns: string[] = ['employeeId','employeeName','contact','department'];
-  dataSource = new MatTableDataSource<IEmployee>(this.ELEMENT_DATA);
+  dataSource
 
   constructor(private api: ApiServiceService, private router: Router){}
   @ViewChild(MatPaginator, {static: true}) paginator : MatPaginator;
@@ -22,6 +22,9 @@ export class ComponentComponent implements OnInit {
 
   ngOnInit(){
     this.getAllEmployee();
+
+    this.dataSource = new MatTableDataSource<IEmployee>(this.ELEMENT_DATA);
+    
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
