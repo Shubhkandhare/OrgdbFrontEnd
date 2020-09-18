@@ -32,6 +32,7 @@ export class ComponentComponent implements OnInit {
   public getAllEmployee(){
     let resp = this.api.getAllEmployee();
     resp.subscribe(res => this.dataSource.data = res as IEmployee[]);
+    console.log(resp);
   }
 
   public gotoList() {

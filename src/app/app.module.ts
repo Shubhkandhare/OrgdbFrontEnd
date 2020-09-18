@@ -29,6 +29,8 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { CrudDepartmentComponent } from './crud-department/crud-department.component';
+import { CrudAreaComponent } from './crud-area/crud-area.component';
 
 
 @NgModule({
@@ -41,7 +43,9 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     FooterComponent,
     DepartmentComponent,
     AreaComponent,
-    CrudEmployeeComponent
+    CrudEmployeeComponent,
+    CrudDepartmentComponent,
+    CrudAreaComponent
   ],
   imports: [
     BrowserModule,

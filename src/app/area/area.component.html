@@ -1,1 +1,42 @@
-<p>area works!</p>
+<main>
+  <table style="width: 100%;">
+   <tr>
+     <td style="text-align: left;">
+       <label style="font-weight: bold;">Area Dashboard</label>
+     </td>
+   </tr>
+   <tr>
+     <td style="text-align: right;">
+         <button mat-raised-button (click)="gotoList()">Create Area</button>
+         <br><br>
+     </td>
+   </tr>
+   <tr>
+     <td style="text-align: center;">
+       <div class="mat-elevation-z8" style="width: 100%;">
+         <table mat-table [dataSource]="dataSource" matSort style="width: 100%;">
+
+           <ng-container matColumnDef="deptName">
+             <th mat-header-cell *matHeaderCellDef mat-sort-header> Department Name </th>
+             <td mat-cell *matCellDef="let area" style="text-align: left;"> {{area.deptName}} </td>
+           </ng-container>
+       
+           <ng-container matColumnDef="areaName">
+             <th mat-header-cell *matHeaderCellDef mat-sort-header> Area Name </th>
+             <td mat-cell *matCellDef="let area" style="text-align: left;"> {{area.areaName}} </td>
+           </ng-container>
+     
+           <ng-container matColumnDef="areaOwner">
+             <th mat-header-cell *matHeaderCellDef mat-sort-header> Area Owner </th>
+             <td mat-cell *matCellDef="let area" style="text-align: left;"> {{area.areaOwner}} </td>
+           </ng-container>
+                    
+           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+         </table>
+         <mat-paginator [pageSizeOptions]="[2, 4, 5, 10, 20]" showFirstLastButtons class="mat-elevation-z8"></mat-paginator>
+       </div>
+     </td>
+   </tr>   
+ </table>
+ </main>

@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http"
 import { Subject } from 'rxjs';
-
+import { GlobalVariable } from "../global";
 @Injectable({
   providedIn: 'root'
 })
 export class ApiServiceService {
+
+  private baseApiUrl = GlobalVariable.BASE_API_URL;
 
   private listEmployee = new Subject<any>();
   listSelected = this.listEmployee.asObservable();
@@ -20,21 +22,21 @@ export class ApiServiceService {
      }
 
     getAllEmployee() {
-        return this.http.get(`https://localhost:44360/employee`);
+        return this.http.get(this.baseApiUrl+`employee`);
     }
 
     getAllDepartment() {
-      return this.http.get(`https://localhost:44360/department`);
+      return this.http.get(this.baseApiUrl+`department`);
     }
 
     getAllRoles() {
-      return this.http.get(`https://localhost:44360/role`);
+      return this.http.get(this.baseApiUrl+`role`);
     }
     GetAllReportsTo() {
-      return this.http.get(`https://localhost:44360/reportsto`);
+      return this.http.get(this.baseApiUrl+`reportsto`);
     }
     postEmployee(employee) {
-      this.http.post(`https://localhost:44360/employee`, employee).subscribe(res => {
+      this.http.post(this.baseApiUrl+`employee`, employee).subscribe(res => {
           console.log(res);
       }), this.headers;
     }
@@ -44,11 +46,11 @@ export class ApiServiceService {
           headers: { 'Content-Type': 'application/json' },
           params: { 'email': email }
       };
-      return this.http.get(`https://localhost:44360/employee/GetEmployeeByEmail/`, httpOptions);
+      return this.http.get(this.baseApiUrl+`employee/GetEmployeeByEmail/`, httpOptions);
     }
 /*
     putEmployee(employee) {
-        this.http.put(`https://localhost:44360/employee/${employee.id}`, employee).subscribe(res => {
+        this.http.put(this.baseApiUrl+`employee/${employee.id}`, employee).subscribe(res => {
             console.log(res);
         }), this.headers;
     }*/
