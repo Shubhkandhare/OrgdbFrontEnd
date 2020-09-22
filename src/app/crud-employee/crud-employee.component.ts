@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiServiceService } from "../employee/api-service.service";
-import { Observable } from 'rxjs';
-import { map, startWith} from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Router } from "@angular/router";
+import { debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
+import { GlobalVariable } from "../global";
 
 @Component({
   selector: 'app-main',
@@ -11,39 +12,53 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
   styleUrls: ['./crud-employee.component.css']
 })
 export class CrudEmployeeComponent implements OnInit {
-  form: any = {}
+  private baseApiUrl = GlobalVariable.BASE_API_URL;
+
+  searchReportsToCtrl = new FormControl();
+  filteredreportsTo: any;
+  isLoading = false;
+  errorMsg: string;
   employee: any = {}
   gender: string[] = ['Male', 'Female', 'Other'];
-
   departmentList: string[];
   roleList: string[];
-  autoCompleteControl = new FormControl();
-  options: User[] = [
-    {name: 'Tarun Seth'},
-    {name: 'Meera Saha'},
-    {name: 'Rita Mathur'}
-  ];
-  filteredOptions: Observable<User[]>;
+  employee_org_id;
 
-  myBooks: string [];
-  selected = null;
-
-  constructor(private api: ApiServiceService, private http: HttpClient) {}
+  constructor(private api: ApiServiceService, private http: HttpClient, private router: Router) {}
    ngOnInit() { 
     this.getAllDepartment();
     this.getAllRole();
-     this.filteredOptions = this.autoCompleteControl.valueChanges
-      .pipe(
-        startWith(''),
-        map(value => typeof value === 'string' ? value : value.name),
-        map(name => name ? this._filter(name) : this.options.slice())
+    //Autocomplete ReportsTo
+    this.searchReportsToCtrl.valueChanges
+    .pipe(
+      debounceTime(500),
+      tap(() => {
+        this.errorMsg = "";
+        this.filteredreportsTo = [];
+        this.isLoading = true;
+      }),
+      switchMap(value => this.http.get(this.baseApiUrl+`employee/GetEmployeeName?val=` + value)
+        .pipe(
+          finalize(() => {
+            this.isLoading = false
+          }),
+        )
       )
+    )
+    .subscribe(data => {
+      this.filteredreportsTo = data as [];
+    });
   }
-  postemployee(employee){
+  postemployee(employee)//Save employee if already exists then update otherwise insert
+  {
+    employee.employee_org_id = this.employee_org_id.toString();
+    this.employee.employee_org_id.toString();
     console.log(employee);
-    this.api.postEmployee(employee)
+    this.api.postEmployee(employee).subscribe(result => console.log(result),
+    (error) => { alert('Record not saved successfully!'); }, () => { alert('Record saved successfully'); })
   }
-  getAllDepartment(){
+  getAllDepartment()//Get All Departments to populate dropdown
+  {
     let resp = this.api.getAllDepartment();
     resp.subscribe(
       data => {
@@ -51,40 +66,21 @@ export class CrudEmployeeComponent implements OnInit {
       }
     );
   }
-  getAllRole(){
+  getAllRole()//Get All Roles to populate dropdown
+  {
     let resp = this.api.getAllRoles();
     resp.subscribe(data => {this.roleList = data as string[];
     });
   }
-  GetAllReportsTo(){
-    let resp = this.api.GetAllReportsTo();
-    resp.subscribe(data => {this.roleList = data as string[];
+  getEmployeeOrgIdByFLName()//Get EmployeeOrgId by First and Last Name
+  {
+    let resp = this.api.getEmployeeOrgIdByFLName(this.employee.first_name, this.employee.last_name);
+    resp.subscribe(data => {
+      this.employee_org_id = data as string[];      
     });
   }
-  displayFn(user?: User): string | undefined {
-    return user ? user.name : undefined;
-  }
-  public selectedValue;
-  selectedOption(event) {
-    this.selectedValue = event.option.value;
-    //this.employee.reports_to = this.selectedValue.name; //Set Reports To Value
-    //console.log(this.selectedValue.name);
- }
-
-  private _filter(name: string): User[] {
-    const filterValue = name.toLowerCase();
-
-    return this.options.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
-  }
-
-  getEmployeeIdByEmail()
+  resetemployee()
   {
-    let resp = this.api.getEmployeeByEmail(this.employee.email);
-    resp.subscribe(data => {this.employee.employee_id = data as string[] });
-    //console.log(this.employee.email);
+    location.reload();
   }
-}
-export interface User {
-  //id:number,
-  name: string;
 }

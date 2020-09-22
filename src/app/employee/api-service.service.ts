@@ -20,38 +20,26 @@ export class ApiServiceService {
    'Content-Type': 'application/json; charset=utf-8',
    "X-Requested-With": "XMLHttpRequest"
      }
-
     getAllEmployee() {
         return this.http.get(this.baseApiUrl+`employee`);
-    }
-
+    }    
     getAllDepartment() {
       return this.http.get(this.baseApiUrl+`department`);
     }
-
     getAllRoles() {
       return this.http.get(this.baseApiUrl+`role`);
-    }
-    GetAllReportsTo() {
-      return this.http.get(this.baseApiUrl+`reportsto`);
-    }
+    }    
     postEmployee(employee) {
-      this.http.post(this.baseApiUrl+`employee`, employee).subscribe(res => {
-          console.log(res);
-      }), this.headers;
+      return this.http.post(this.baseApiUrl+`employee`, employee)
+      // .subscribe(res => {
+      //     console.log(res);
+      // }), this.headers;
     }
-
-    getEmployeeByEmail(email) {
-        const httpOptions = {
-          headers: { 'Content-Type': 'application/json' },
-          params: { 'email': email }
-      };
-      return this.http.get(this.baseApiUrl+`employee/GetEmployeeByEmail/`, httpOptions);
-    }
-/*
-    putEmployee(employee) {
-        this.http.put(this.baseApiUrl+`employee/${employee.id}`, employee).subscribe(res => {
-            console.log(res);
-        }), this.headers;
-    }*/
+    getEmployeeOrgIdByFLName(first_name, last_name){
+      const httpOptions = {
+        headers: { 'Content-Type': 'application/json' },
+        params: { 'first_name': first_name,  'last_name': last_name}
+    };
+    return this.http.get(this.baseApiUrl+`employee/GetEmployeeOrgIdByFLName`, httpOptions);
+  }
 }

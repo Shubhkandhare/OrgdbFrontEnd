@@ -48,7 +48,7 @@
                     </div>
                     <div style="width: 33%;">
                         <mat-form-field class="example-full-width">
-                            <input matInput placeholder="Phone" required name="phone" [(ngModel)]="employee.phone" (click)="getEmployeeIdByEmail()" value="">
+                            <input matInput placeholder="Phone" required name="phone" [(ngModel)]="employee.phone" (keydown.Tab)="getEmployeeOrgIdByFLName()" (click)="getEmployeeOrgIdByFLName()" value="">
                         </mat-form-field>
                     </div>
                 </div>
@@ -73,7 +73,7 @@
                 <div style="width: 100%; display: flex;">
                     <div style="width: 25%;">
                         <mat-form-field class="example-full-width">
-                            <input matInput placeholder="Employee Id" name="employee_id" [(ngModel)]="employee.employee_id" disabled>
+                            <input matInput placeholder="Employee Id" name="employee_org_id" [(ngModel)]="employee_org_id" disabled>
                         </mat-form-field>
                     </div>
                     <div style="width: 25%;">     
@@ -111,17 +111,26 @@
                           </mat-form-field>
                     </div>                
                     <div style="width: 33%;">
-                        <mat-form-field class="example-full-width">
-                            <input type="text" placeholder="Reports To" aria-label="Assignee" matInput name="reportsto" [formControl]="autoCompleteControl" [matAutocomplete]="auto">
-                            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="selectedOption($event)">
-                              <mat-option *ngFor="let option of filteredOptions | async" [value]="option" >
-                                {{option.name}}
-                              </mat-option>
-                            </mat-autocomplete>
-                          </mat-form-field>
+                        <div>
+
+                            <mat-form-field>
+                              <input matInput placeholder="Reports To" aria-label="reportsto" [matAutocomplete]="auto" [(ngModel)]="employee.reports_to" [formControl]="searchReportsToCtrl">
+                              <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                                <mat-option *ngIf="isLoading" class="is-loading">Loading...</mat-option>
+                                <ng-container *ngIf="!isLoading">
+                                  <mat-option *ngFor="let reportsTo of filteredreportsTo" [value]="reportsTo.name">
+                                    <span>{{reportsTo.id }} - {{reportsTo.name}}</span>
+                                  </mat-option>
+                                </ng-container>
+                              </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
                     </div>
                 </div>
-                <button mat-raised-button color="primary" (click)="postemployee(employee)">Save</button> 
+                <div style="width: 100%; display: flex; direction: rtl;">                    
+                    <button mat-raised-button color="primary" (click)="resetemployee()">Cancel</button>&nbsp;&nbsp;
+                    <button mat-raised-button color="primary" (click)="postemployee(employee)">Save</button>
+                </div>
             </div>
         <!-- </form> -->
     </mat-card-content>

@@ -22,4 +22,9 @@ export class DeptServiceService {
   {
     return this.http.get(this.baseApiUrl+`department/getDepartmentGridInfo`);
   }
+
+  getDepartmentType()
+  {
+    return this.http.get(this.baseApiUrl+`department`);
+  }
 }
