@@ -23,17 +23,14 @@ export class ApiServiceService {
     getAllEmployee() {
         return this.http.get(this.baseApiUrl+`employee`);
     }    
-    getAllDepartment() {
-      return this.http.get(this.baseApiUrl+`department`);
+    getAllOrgDepartment() {
+      return this.http.get(this.baseApiUrl+`department/GetAllOrgDepartment`);
     }
     getAllRoles() {
       return this.http.get(this.baseApiUrl+`role`);
     }    
     postEmployee(employee) {
-      return this.http.post(this.baseApiUrl+`employee`, employee)
-      // .subscribe(res => {
-      //     console.log(res);
-      // }), this.headers;
+      return this.http.post(this.baseApiUrl+`employee`, employee);
     }
     getEmployeeOrgIdByFLName(first_name, last_name){
       const httpOptions = {

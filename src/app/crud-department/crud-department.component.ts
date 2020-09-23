@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DeptServiceService } from "../department/dept-service.service";
+
 @Component({
   selector: 'app-main',
   templateUrl: './crud-department.component.html',
@@ -11,9 +12,9 @@ export class CrudDepartmentComponent implements OnInit {
   constructor(private api: DeptServiceService) { }
 
   ngOnInit() {
-    this.getAllDepartment();
+    this.getDepartmentType();
   }
-  getAllDepartment(){
+  getDepartmentType(){
     let resp = this.api.getDepartmentType();
     resp.subscribe(
       data => {

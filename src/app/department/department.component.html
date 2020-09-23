@@ -1,4 +1,36 @@
 <main>
+  <div class="container">
+    <h1>
+      Welcome to {{title}}!!
+    </h1>
+    <form [formGroup]="deptForm" novalidate>
+          <div class="form-group">
+              <label>Name:</label>
+              <input class="form-control" formControlName="name" type="text">
+          </div>
+          <div *ngIf="deptForm.controls['name'].invalid && (deptForm.controls['name'].dirty || deptForm.controls['name'].touched)" class="alert alert-danger">
+              <div *ngIf="deptForm.controls['name'].errors.required">
+                Name is required.
+              </div>
+          </div>
+           <div class="form-group">
+              <label>Address:</label>
+              <input class="form-control" formControlName="address" type="text">
+          </div>
+          <div *ngIf="deptForm.controls['address'].invalid && (deptForm.controls['address'].dirty || deptForm.controls['address'].touched)" class="alert alert-danger">
+              <div *ngIf="deptForm.controls['address'].errors.required">
+                email is required.
+              </div>
+          </div>
+          <button type="submit"
+              [disabled]="deptForm.pristine || deptForm.invalid" class="btn btn-success">
+              Save
+          </button>
+    </form>
+    <br />
+    <p>Form value: {{ deptForm.value | json }}</p>
+    <p>Form status: {{ deptForm.status | json }}</p>
+  </div>
     <table style="width: 100%;">
      <tr>
        <td style="text-align: left;">

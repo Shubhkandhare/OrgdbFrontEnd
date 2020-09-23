@@ -23,10 +23,12 @@ export class CrudEmployeeComponent implements OnInit {
   departmentList: string[];
   roleList: string[];
   employee_org_id;
-
-  constructor(private api: ApiServiceService, private http: HttpClient, private router: Router) {}
+  employeeForm: FormGroup;
+  
+  constructor(private api: ApiServiceService, private http: HttpClient, private router: Router, private fb: FormBuilder) {}
    ngOnInit() { 
-    this.getAllDepartment();
+    this.createForm();
+    this.getAllOrgDepartment();
     this.getAllRole();
     //Autocomplete ReportsTo
     this.searchReportsToCtrl.valueChanges
@@ -49,6 +51,30 @@ export class CrudEmployeeComponent implements OnInit {
       this.filteredreportsTo = data as [];
     });
   }
+  createForm() {
+    this.employeeForm = this.fb.group({
+       firstname: ['', Validators.required ],
+       middlename: ['', Validators.nullValidator ],
+       lastname: ['', Validators.required ],
+       gender:[''],
+       email: new FormControl('',[
+        Validators.required,
+        Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]),
+       phone: ['', Validators.required ],
+       emergencyemail: new FormControl('',[
+        Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]),
+       emergencyphone:[],
+       employeeorgid:[],
+       role:[],
+       isactive:[],
+       oncontract:[],
+       dept: new FormControl('',[
+         Validators.required
+       ]),
+       searchReportsToCtrl:[]
+    });
+  }
+  
   postemployee(employee)//Save employee if already exists then update otherwise insert
   {
     employee.employee_org_id = this.employee_org_id.toString();
@@ -57,9 +83,9 @@ export class CrudEmployeeComponent implements OnInit {
     this.api.postEmployee(employee).subscribe(result => console.log(result),
     (error) => { alert('Record not saved successfully!'); }, () => { alert('Record saved successfully'); })
   }
-  getAllDepartment()//Get All Departments to populate dropdown
+  getAllOrgDepartment()//Get All Departments to populate dropdown
   {
-    let resp = this.api.getAllDepartment();
+    let resp = this.api.getAllOrgDepartment();
     resp.subscribe(
       data => {
         this.departmentList = data as string [];	

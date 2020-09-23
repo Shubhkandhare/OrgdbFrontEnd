@@ -13,7 +13,7 @@
                     </div>
                     <div style="width: 50%;">
                         <mat-form-field appearance="fill">
-                            <mat-label>Department</mat-label>
+                            <mat-label>Department Type</mat-label>
                             <mat-select [(ngModel)]="department.dept_code_key" name="dept">
                               <mat-option>Select Department</mat-option>
                               <mat-option *ngFor="let dept of departmentList" [value]="dept.deptId">
