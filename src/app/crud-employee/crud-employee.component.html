@@ -157,7 +157,7 @@
                      <div style="width: 33%;">
                         <div>
                             <mat-form-field>
-                              <input matInput placeholder="Reports To" aria-label="reportsto" formControlName="searchReportsToCtrl" [matAutocomplete]="auto" [(ngModel)]="employee.reports_to" [formControl]="searchReportsToCtrl">
+                              <input matInput placeholder="Reports To" aria-label="reportsto" [matAutocomplete]="auto" [(ngModel)]="employee.reports_to" [formControl]="searchReportsToCtrl">
                               <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                                 <mat-option *ngIf="isLoading" class="is-loading">Loading...</mat-option>
                                 <ng-container *ngIf="!isLoading">

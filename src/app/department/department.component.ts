@@ -4,7 +4,6 @@ import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from '@angular/material';
 import { Router } from "@angular/router";
-import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-main',
@@ -14,18 +13,10 @@ import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
 export class DepartmentComponent implements OnInit {
   
   ELEMENT_DATA: IDepartment[];
-  displayedColumns: string[] = ['deptName','hod','isAvailable','secondlineApprover'];  
+  displayedColumns: string[] = ['deptName','hod','isAvailable','isUnavailable','secondlineApprover'];  
   dataSource
 
-  deptForm: FormGroup;
-  constructor(private api: DeptServiceService, private router: Router, private fb: FormBuilder) { 
-    this.createForm();
-  }
-  createForm() {
-    this.deptForm = this.fb.group({
-       name: ['', Validators.required ],
-       address: ['', Validators.required ]
-    });
+  constructor(private api: DeptServiceService, private router: Router) { 
   }
 
   @ViewChild(MatPaginator, {static: true}) paginator : MatPaginator;
@@ -57,5 +48,6 @@ export interface IDepartment
   deptName: string,
   hod: string,
   isAvailable: boolean,
+  isUnavailable: boolean,
   secondlineApprover: string
 }

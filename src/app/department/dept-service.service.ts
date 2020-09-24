@@ -17,14 +17,15 @@ export class DeptServiceService {
     'Content-Type':'application/json; charset=utf-8',
     'X-Requested-With':'XMLHttpRequest'
   }
-
   getAllDepartmentGrid()
   {
     return this.http.get(this.baseApiUrl+`department/getDepartmentGridInfo`);
   }
-
   getDepartmentType()
   {
     return this.http.get(this.baseApiUrl+`department`);
+  }
+  postDepartment(department) {
+    return this.http.post(this.baseApiUrl+`department`, department);
   }
 }

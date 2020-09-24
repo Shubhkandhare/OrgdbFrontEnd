@@ -70,8 +70,7 @@ export class CrudEmployeeComponent implements OnInit {
        oncontract:[],
        dept: new FormControl('',[
          Validators.required
-       ]),
-       searchReportsToCtrl:[]
+       ]) 
     });
   }
   
