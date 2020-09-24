@@ -94,6 +94,8 @@ export class CrudDepartmentComponent implements OnInit {
     (error) => { alert('Record not saved successfully!'); }, () => { alert('Record saved successfully'); })
   }
   resetdepartment(){
-    location.reload();
+    if (this.deptForm.valid) {
+      this.deptForm.reset();
+    }
   }
 }

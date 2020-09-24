@@ -106,6 +106,8 @@ export class CrudEmployeeComponent implements OnInit {
   }
   resetemployee()
   {
-    location.reload();
+    if (this.employeeForm.valid) {
+      this.employeeForm.reset();  
+    }
   }
 }
