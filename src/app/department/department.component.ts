@@ -13,7 +13,8 @@ import { Router } from "@angular/router";
 export class DepartmentComponent implements OnInit {
   
   ELEMENT_DATA: IDepartment[];
-  displayedColumns: string[] = ['deptName','hod','isAvailable','isUnavailable','secondlineApprover'];  
+  // displayedColumns: string[] = ['deptName','deptType','hod','isAvailable','isUnavailable','secondlineApprover'];  
+  displayedColumns: string[] = ['deptName','deptType','hod','isAvailable','secondlineApprover'];  
   dataSource
 
   constructor(private api: DeptServiceService, private router: Router) { 
@@ -24,8 +25,7 @@ export class DepartmentComponent implements OnInit {
 
   ngOnInit() {
      this.populateDeptGrid();
-     this.dataSource = new MatTableDataSource<IDepartment>(this.ELEMENT_DATA);
-    
+     this.dataSource = new MatTableDataSource<IDepartment>(this.ELEMENT_DATA);    
      this.dataSource.paginator = this.paginator;
      this.dataSource.sort = this.sort;
   }
@@ -46,8 +46,9 @@ export class DepartmentComponent implements OnInit {
 export interface IDepartment
 {
   deptName: string,
+  deptType: string,
   hod: string,
   isAvailable: boolean,
-  isUnavailable: boolean,
+  //isUnavailable: boolean,
   secondlineApprover: string
 }

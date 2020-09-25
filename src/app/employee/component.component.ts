@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 
 export class ComponentComponent implements OnInit {
   ELEMENT_DATA : IEmployee[];
-  displayedColumns: string[] = ['employeeId','employeeName','contact','department'];
+  displayedColumns: string[] = ['employeeId','employeeName','contact','department', 'OrgDeptName'];
   dataSource
 
   constructor(private api: ApiServiceService, private router: Router){}
@@ -45,5 +45,5 @@ export interface IEmployee{
   employeeName: string;
   contact: string;
   department: string;
-  //reportsTo: string;
+  orgDeptName: string;
 }

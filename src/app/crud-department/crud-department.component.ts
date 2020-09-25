@@ -46,6 +46,7 @@ export class CrudDepartmentComponent implements OnInit {
     )
     .subscribe(data => {
       this.filteredreportsTo = data as [];
+      //this.department.isUnavailable = true;
     });
     //Autocomplete for SecondLineApprover
     this.searchSecondLineApp.valueChanges
